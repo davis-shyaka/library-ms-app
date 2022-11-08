@@ -41,8 +41,9 @@
                 <x-navbar />
 
                 <!-- Page Heading -->
-                <header>
-                    <div class="p-4 sm:p-6">
+                <header
+                    class="bg-white dark:bg-cyan-500 shadow lg:w-1/4 rounded-xl sm:w-1 mx-auto mt-4 mb-1 text-center">
+                    <div class="max-w-7xl mx-auto text-black py-2 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>

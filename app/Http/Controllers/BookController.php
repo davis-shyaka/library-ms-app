@@ -18,14 +18,14 @@ class BookController extends Controller
      */
     public function index()
     {
-        // $books = Book::with('category')->get();
-        $books = Book::all();
+        $books = Book::with('category', 'author')->get();
+        // $books = Book::all();
 
         if ($books) {
             $books = Book::paginate(4);
         }
 
-        return view('books.index', compact('books'));
+        return view('books.index', compact('books',));
     }
 
     /**
@@ -47,7 +47,7 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBookRequest $request)
+    public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string',

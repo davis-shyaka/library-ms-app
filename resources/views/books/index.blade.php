@@ -38,7 +38,7 @@
                                         fill="currentColor" />
                                 </svg>
                             </div>
-                            <a class="block p-2 pl-10 w-40 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-green-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            <a class="block p-2 pl-10 w-40 text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-green-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 href="{{ route('books.create') }}">Add a new book</a>
                         </div>
                     </div>
@@ -96,8 +96,7 @@
                                     {{ $book->author->name }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    {{-- {{ $book->category->name }} --}}
-                                    {{-- {{ $book->category_id }} --}}
+                                    {{ $book->category->name }}
                                 </td>
                                 <td class="py-4 px-6">
                                     {{ $book->quantity }}
@@ -121,7 +120,7 @@
                 </table>
             </div>
             <div class="mt-4">
-                {{-- {{ $books->links() }} --}}
+                {{ $books->links() }}
             </div>
         </div>
     </div>

@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowedBookController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +28,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::resource('tasks', TaskController::class);
+
 // Imports
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/dashboard', function () {
@@ -34,29 +43,33 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 
     Route::group(['middleware' => ['is_admin']], function () {
+
+        // useless routes
+        // Just to demo sidebar dropdown links active states.
+        Route::get('/buttons/text', function () {
+            return view('buttons-showcase.text');
+        })->middleware(['auth'])->name('buttons.text');
+
+        Route::get('/buttons/icon', function () {
+            return view('buttons-showcase.icon');
+        })->middleware(['auth'])->name('buttons.icon');
+
+        Route::get('/buttons/text-icon', function () {
+            return view('buttons-showcase.text-icon');
+        })->middleware(['auth'])->name('buttons.text-icon');
+
+        // Main Routes
+
         Route::resource('authors', AuthorController::class);
         Route::resource('categories', CategoryController::class);
         Route::resource('books', BookController::class);
         Route::resource('borrowedBooks', BorrowedBookController::class);
         Route::resource('tasks', TaskController::class);
+        Route::resource('users', UserController::class);
 
         Route::post('/search', [BookController::class, 'show'])->name('books.show');
         Route::post('/search', [BorrowedBook::class, 'show'])->name('borrowedBooks.search');
     });
 });
-
-// useless routes
-// Just to demo sidebar dropdown links active states.
-Route::get('/buttons/text', function () {
-    return view('buttons-showcase.text');
-})->middleware(['auth'])->name('buttons.text');
-
-Route::get('/buttons/icon', function () {
-    return view('buttons-showcase.icon');
-})->middleware(['auth'])->name('buttons.icon');
-
-Route::get('/buttons/text-icon', function () {
-    return view('buttons-showcase.text-icon');
-})->middleware(['auth'])->name('buttons.text-icon');
 
 require __DIR__ . '/auth.php';
