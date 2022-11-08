@@ -19,6 +19,6 @@ class ProfileController extends Controller
             ]);
         }
 
-        return redirect()->route('profile')->with('message', 'Profile saved successfully');
+        return redirect()->route('profile')->with('message', 'Profile updated successfully');
     }
 }
