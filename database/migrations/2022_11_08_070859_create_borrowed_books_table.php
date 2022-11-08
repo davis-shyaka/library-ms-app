@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('borrowed_books', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('reg_number')->unique();
-            $table->string('email')->unique();
-            $table->string('phone_number')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->date('borrow_date');
+            $table->date('return_date');
+            $table->boolean('is_due')->default(false);
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('borrowed_books');
     }
 };
