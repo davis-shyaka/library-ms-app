@@ -14,8 +14,8 @@
                         <x-slot name="icon">
                             <x-heroicon-o-user aria-hidden="true" class="w-5 h-5" />
                         </x-slot>
-                        <x-input withicon id="name" class="block w-full" type="text" name="name" :value="old('name')"
-                            required autofocus placeholder="{{ __('Name') }}" />
+                        <x-input withicon id="name" class="block w-full" type="text" name="name"
+                            :value="old('name')" required autofocus placeholder="{{ __('Name') }}" />
                     </x-input-with-icon-wrapper>
                 </div>
 
@@ -28,6 +28,30 @@
                         </x-slot>
                         <x-input withicon id="email" class="block w-full" type="email" name="email"
                             :value="old('email')" required placeholder="{{ __('Email') }}" />
+                    </x-input-with-icon-wrapper>
+                </div>
+
+                <!-- Reg Number -->
+                <div class="space-y-2">
+                    <x-label for="reg_number" :value="__('Reg Number')" />
+                    <x-input-with-icon-wrapper>
+                        <x-slot name="icon">
+                            <x-heroicon-o-mail aria-hidden="true" class="w-5 h-5" />
+                        </x-slot>
+                        <x-input withicon id="email" class="block w-full" type="number" name="reg_number"
+                            :value="old('reg_number')" required placeholder="{{ __('Reg Number') }}" />
+                    </x-input-with-icon-wrapper>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="space-y-2">
+                    <x-label for="phone_number" :value="__('Phone Number')" />
+                    <x-input-with-icon-wrapper>
+                        <x-slot name="icon">
+                            <x-heroicon-o-mail aria-hidden="true" class="w-5 h-5" />
+                        </x-slot>
+                        <x-input withicon id="phone_number" class="block w-full" type="tel" name="phone_number"
+                            :value="old('phone_number')" required placeholder="{{ __('Phone Number') }}" />
                     </x-input-with-icon-wrapper>
                 </div>
 
