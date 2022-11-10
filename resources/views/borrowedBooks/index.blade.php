@@ -106,14 +106,12 @@
                                 </td>
                                 <td class="py-4 px-6 text-center">
                                     @if ($borrowedBook->is_due === 1)
-                                        <button
-                                            class="p-1 bg-red-400 rounded-full text-red-900 hover:cursor-text">Already
-                                            Due</button>
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-800">YES</span>
                                     @endif
                                     @if ($borrowedBook->is_due === 0)
-                                        <button
-                                            class="p-1 bg-green-400 rounded-full text-green-900 hover:cursor-text">Not
-                                            Yet Due</button>
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-200 text-green-800">NO</span>
                                     @endif
                                 </td>
                                 <td class="py-4 px-6 flex items-center space-x-3">

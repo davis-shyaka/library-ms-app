@@ -67,8 +67,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('tasks', TaskController::class);
         Route::resource('users', UserController::class);
 
-        Route::post('/search', [BookController::class, 'show'])->name('books.show');
-        Route::post('/search', [BorrowedBook::class, 'show'])->name('borrowedBooks.search');
+        Route::post('/search', [BookController::class, 'search'])->name('books.search');
+        Route::post('/borrowedBookSearch', [BorrowedBook::class, 'show'])->name('borrowedBooks.search');
     });
 });
 

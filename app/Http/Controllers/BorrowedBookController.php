@@ -51,14 +51,22 @@ class BorrowedBookController extends Controller
             'return_date' => 'required|date'
         ]);
 
-        BorrowedBook::create([
-            'user_id' => $request->input('user_id'),
-            'book_id' => $request->input('book_id'),
-            'borrow_date' => $request->input('borrow_date'),
-            'return_date' => $request->input('return_date'),
-        ]);
+        $book = Book::find($request->book_id);
+        if ($book->quantity > 0) {
+            BorrowedBook::create([
+                'user_id' => $request->input('user_id'),
+                'book_id' => $request->input('book_id'),
+                'borrow_date' => $request->input('borrow_date'),
+                'return_date' => $request->input('return_date'),
+            ]);
 
-        return redirect()->route('borrowedBooks.index');
+            $book->quantity -= 1;
+            $book->update();
+
+            return redirect()->route('borrowedBooks.index');
+        } else {
+            return back()->withErrors(['lent_out' => 'All copies of this book have already been lent.']);
+        }
     }
 
     /**

@@ -83,21 +83,29 @@ class BookController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show(Request $request, Book $book)
+    // public function show(Request $request)
+    // {
+    //     $books = Book::where('title', 'like', '%' . $request->item . '%')
+    //         ->orWhere('author', 'like', '%' . $request->item . '%')
+    //         ->orWhere('category', 'like', '%' . $request->item . '%')
+    //         ->paginate(2);
+    //     // if ($books) {
+    //     //     $books = Book::paginate(2);
+    //     // }
+    //     return view('books.index', compact('books'));
+    // }
+
+    public function search(Request $request)
     {
-        $books = Book::where('title', 'like', '%' . $request->item . '%')->paginate();
-        // if ($books) {
-        //     $books = Book::paginate(2);
-        // }
+        $books = Book::where('title', 'like', '%' . $request->item . '%')
+            ->orWhereHas('author', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->item . '%');
+            })
+            ->orWhereHas('category_id', 'like', '%' . $request->item . '%')
+            ->paginate();
+
         return view('books.index', compact('books'));
     }
-
-    // public function search($query)
-    // {
-    //     $book = Book::where('title', 'like', '%' . $query . '%')->get();
-    //     dd($book);
-    //     // return view('book.index', compact('book'));
-    // }
 
     /**
      * Show the form for editing the specified resource.
