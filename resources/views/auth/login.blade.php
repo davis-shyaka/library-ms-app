@@ -39,15 +39,15 @@
                 <div class="flex items-center justify-between">
                     <label for="remember_me" class="inline-flex items-center">
                         <input id="remember_me" type="checkbox"
-                            class="text-purple-500 border-gray-300 rounded focus:border-purple-300 focus:ring focus:ring-purple-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1"
+                            class="text-cyan-400 border-gray-300 rounded focus:border-purple-300 focus:ring focus:ring-cyan-400 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1"
                             name="remember">
                         <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
                     </label>
 
                     @if (Route::has('password.request'))
-                    <a class="text-sm text-blue-500 hover:underline" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
+                        <a class="text-sm text-blue-500 hover:underline" href="{{ route('password.request') }}">
+                            {{ __('Forgot your password?') }}
+                        </a>
                     @endif
                 </div>
 
@@ -59,12 +59,12 @@
                 </div>
 
                 @if (Route::has('register'))
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                    {{ __('Don’t have an account?') }}
-                    <a href="{{ route('register') }}" class="text-blue-500 hover:underline">
-                        {{ __('Register') }}
-                    </a>
-                </p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        {{ __('Don’t have an account?') }}
+                        <a href="{{ route('register') }}" class="text-blue-500 hover:underline">
+                            {{ __('Register') }}
+                        </a>
+                    </p>
                 @endif
             </div>
         </form>
