@@ -101,7 +101,9 @@ class BookController extends Controller
             ->orWhereHas('author', function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->item . '%');
             })
-            ->orWhereHas('category_id', 'like', '%' . $request->item . '%')
+            ->orWhereHas('category', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->item . '%');
+            })
             ->paginate();
 
         return view('books.index', compact('books'));
@@ -132,8 +134,8 @@ class BookController extends Controller
     {
         $request->validate([
             'title' => 'required|string',
-            'author_id' => 'required|',
-            'description' => 'required|longText',
+            'author_id' => 'required',
+            'description' => 'required',
             'category_id' => 'required',
             'language' => 'required',
             'format' => 'required',

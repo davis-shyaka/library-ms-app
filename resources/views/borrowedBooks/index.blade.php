@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-4">
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg dark:bg-[#020917]">
                 {{-- Top Section of the Table --}}
                 <div class="w-full text-sm text-left p-4">
@@ -133,7 +133,7 @@
                 </table>
             </div>
             <div class="mt-4">
-                {{-- {{ $borrowedBooks->links() }} --}}
+                {{ $borrowedBooks->links() }}
             </div>
         </div>
     </div>
