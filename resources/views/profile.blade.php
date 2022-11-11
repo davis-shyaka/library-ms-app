@@ -9,23 +9,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-[#020917] overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 border-b border-cyan-400">
-                    {{-- @if ($errors->any())
-                    <div class="alert alert-danger text-sm text-red-600 space-y-1">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif --}}
-
                     <x-validation-errors />
                     <x-success-message />
 
                     <form method="POST" action="{{ route('profile.update') }}">
                         @method('PUT')
                         @csrf
-                        <div class="grid lg:grid-cols-2 gap-6 sm:grid-cols-1">
+                        <div class="grid lg:grid-cols-3 gap-6 sm:grid-cols-1">
                             <div class="grid grid-rows-2 gap-6">
                                 <div>
                                     <x-label for="name" :value="__('Name')" />
@@ -36,6 +26,18 @@
                                     <x-label for="email" :value="__('Email')" />
                                     <x-input id="email" class="block mt-1 w-full" type="email" name="email"
                                         value="{{ auth()->user()->email }}" autofocus />
+                                </div>
+                            </div>
+                            <div class="grid grid-rows-2 gap-6">
+                                <div>
+                                    <x-label for="name" :value="__('Reg Number')" />
+                                    <x-input id="reg_number" class="block mt-1 w-full" type="number" name="reg_number"
+                                        value="{{ auth()->user()->reg_number }}" autofocus />
+                                </div>
+                                <div>
+                                    <x-label for="phone_number" :value="__('Phone Number')" />
+                                    <x-input id="phone_number" class="block mt-1 w-full" type="tel"
+                                        name="phone_number" value="{{ auth()->user()->phone_number }}" autofocus />
                                 </div>
                             </div>
                             <div class="grid grid-rows-2 gap-6">

@@ -28,25 +28,26 @@ class UserController extends Controller
     }
 
 
-    public function show(Request $task)
+    public function show(Request $request)
     {
         //
     }
 
 
-    public function edit(User $task)
+    public function edit(User $request)
     {
         //
     }
 
 
-    public function update(Request $request, User $task)
+    public function update(Request $request, User $user)
     {
         //
     }
 
-    public function destroy(User $task)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('users.index');
     }
 }

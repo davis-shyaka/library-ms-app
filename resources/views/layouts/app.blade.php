@@ -41,9 +41,9 @@
                 <x-navbar />
 
                 <!-- Page Heading -->
-                <header
-                    class="bg-white dark:bg-cyan-500 shadow lg:w-1/4 rounded-xl sm:w-1 mx-auto mt-4 mb-1 text-center">
-                    <div class="max-w-7xl mx-auto text-black py-2 px-4 sm:px-6 lg:px-8">
+                <header class="bg-[#020917] shadow lg:w-1/4 rounded-xl sm:w-1 mx-auto mt-4 mb-2">
+                    <div
+                        class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8 text-transparent bg-clip-text bg-gradient-to-r to-indigo-600 from-cyan-400">
                         {{ $header }}
                     </div>
                 </header>
@@ -58,6 +58,7 @@
             </div>
         </div>
     </div>
+    <script src="https://kit.fontawesome.com/92d2814568.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

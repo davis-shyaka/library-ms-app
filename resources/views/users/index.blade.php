@@ -8,7 +8,7 @@
     </x-slot>
 
     <div class="flex justify-center mb-2">
-        <div class="relative mt-5">
+        <div class="relative mt-2">
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -92,9 +92,19 @@
                                                     @endif
 
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <a href="{{ route('users.edit', $user) }}"
-                                                        class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                                <td
+                                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium flex items-center justify-center space-x-3">
+                                                    <a href="{{ route('users.edit', $user) }}"><button
+                                                            class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-white hover:text-blue-600 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
+                                                            type="submit">Edit</button></a>
+                                                    <form method="POST" action="{{ route('users.destroy', $user) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button
+                                                            class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-white hover:text-red-600 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
+                                                            type="submit"
+                                                            onclick="return confirm(`Are you sure you want to delete this user: '{{ $user->name }}'?`)">Delete</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach
