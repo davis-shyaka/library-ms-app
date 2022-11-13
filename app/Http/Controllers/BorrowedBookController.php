@@ -18,7 +18,7 @@ class BorrowedBookController extends Controller
      */
     public function index()
     {
-        $borrowedBooks = BorrowedBook::all();
+        $borrowedBooks = BorrowedBook::paginate(3);
 
         return view('borrowedBooks.index', compact('borrowedBooks'));
     }
@@ -80,12 +80,25 @@ class BorrowedBookController extends Controller
     //     //
     // }
 
-    public function show(Request $request)
+    // public function show(Request $request)
+    // {
+    //     $borrowedBooks = BorrowedBook::where('title', 'like', '%' . $request->item . '%')->paginate();
+    //     // if ($books) {
+    //     //     $books = Book::paginate(2);
+    //     // }
+    //     return view('borrowedBooks.index', compact('borrowedBooks'));
+    // }
+
+    public function search(Request $request)
     {
-        $borrowedBooks = BorrowedBook::where('title', 'like', '%' . $request->item . '%')->paginate();
-        // if ($books) {
-        //     $books = Book::paginate(2);
-        // }
+        $borrowedBooks = BorrowedBook::whereHas('book', function ($q) use ($request) {
+            $q->where('title', 'like', '%' . $request->item . '%');
+        })
+            ->orWhereHas('user', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->item . '%');
+            })
+            ->paginate();
+
         return view('borrowedBooks.index', compact('borrowedBooks'));
     }
     /**
