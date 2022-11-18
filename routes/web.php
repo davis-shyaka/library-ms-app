@@ -35,25 +35,25 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::group(['middleware' => ['is_admin']], function () {
+    // Route::group(['middleware' => ['is_admin']], function () {
 
-        Route::view('profile', 'profile')->name('profile');
-        Route::put('profile', [ProfileController::class, 'update'])
-            ->name('profile.update');
+    Route::view('profile', 'profile')->name('profile');
+    Route::put('profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
 
-        Route::resource('tasks', TaskController::class);
+    Route::resource('tasks', TaskController::class);
 
-        Route::resource('authors', AuthorController::class);
-        Route::resource('categories', CategoryController::class);
-        Route::resource('books', BookController::class);
-        Route::resource('borrowedBooks', BorrowedBookController::class);
-        Route::resource('tasks', TaskController::class);
-        Route::resource('users', UserController::class);
+    Route::resource('authors', AuthorController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('books', BookController::class);
+    Route::resource('borrowedBooks', BorrowedBookController::class);
+    Route::resource('tasks', TaskController::class);
+    Route::resource('users', UserController::class);
 
-        Route::post('/search', [BookController::class, 'search'])->name('books.search');
-        Route::post('/usersSearch', [UserController::class, 'search'])->name('users.search');
-        Route::post('/borrowedBookSearch', [BorrowedBookController::class, 'search'])->name('borrowedBooks.search');
-    });
+    Route::post('/search', [BookController::class, 'search'])->name('books.search');
+    Route::post('/usersSearch', [UserController::class, 'search'])->name('users.search');
+    Route::post('/borrowedBookSearch', [BorrowedBookController::class, 'search'])->name('borrowedBooks.search');
+    // });
 });
 
 // useless routes

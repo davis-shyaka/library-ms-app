@@ -109,10 +109,15 @@ class BorrowedBookController extends Controller
      */
     public function edit(BorrowedBook $borrowedBook)
     {
-        $books = Book::all();
-        $users = User::all();
+        $user = User::find(auth()->user()->id);
+        if ($user->can('edit book')) {
+            $books = Book::all();
+            $users = User::all();
 
-        return view('borrowedBooks.edit', compact('borrowedBook', 'books', 'users'));
+            return view('borrowedBooks.edit', compact('borrowedBook', 'books', 'users'));
+        } else {
+            return back()->withErrors(['forbidden' => 'You are not authorized to do this', 'Contact the director']);
+        }
     }
 
     /**
@@ -148,8 +153,12 @@ class BorrowedBookController extends Controller
      */
     public function destroy(BorrowedBook $borrowedBook)
     {
-        $borrowedBook->delete();
-
-        return redirect()->route('borrowedBooks.index');
+        $user = User::find(auth()->user()->id);
+        if ($user->can('edit book')) {
+            $borrowedBook->delete();
+            return redirect()->route('borrowedBooks.index');
+        } else {
+            return back()->withErrors(['forbidden' => 'You are not authorized to do this', 'Contact the director']);
+        }
     }
 }

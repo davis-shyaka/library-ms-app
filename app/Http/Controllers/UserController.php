@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -18,13 +20,34 @@ class UserController extends Controller
 
     public function create()
     {
-        //
+        $roles = Role::all();
+        // dd($roles);
+        return view('users.create', compact('roles'));
     }
 
 
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'reg_number' => ['required', 'integer', 'unique:users'],
+            'phone_number' => ['required', 'unique:users'],
+            'password' => ['required', 'confirmed', 'min:6'],
+            'role' => ['required']
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'reg_number' => $request->reg_number,
+            'phone_number' => $request->phone_number,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $user->assignRole($request->role);
+        // dd($user->roles);
+        return redirect()->route('users.index')->with('message', 'Created ' . $user->name . ' as a' . auth()->user()->roles->pluck('name')->first() . ' successfully');;
     }
 
 
