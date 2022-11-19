@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Author;
 use App\Http\Requests\StoreAuthorRequest;
 use App\Http\Requests\UpdateAuthorRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -69,7 +70,12 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        return view('authors.edit', compact('author'));
+        $user = User::find(auth()->user()->id);
+        if ($user->can('edit category')) {
+            return view('authors.edit', compact('author'));
+        } else {
+            return back()->withErrors(['forbidden' => 'You are not authorized to do this']);
+        }
     }
 
     /**
@@ -99,8 +105,14 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        $author->delete();
+        $user = User::find(auth()->user()->id);
+        if ($user->can('delete author')) {
 
-        return redirect()->route('authors.index');
+            $author->delete();
+
+            return redirect()->route('authors.index');
+        } else {
+            return back()->withErrors(['forbidden' => 'You are not authorized to do this']);
+        }
     }
 }

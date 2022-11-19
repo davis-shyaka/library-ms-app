@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateBookRequest;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -117,10 +118,15 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        $authors = Author::all();
-        $categories = Category::all();
+        $user = User::find(auth()->user()->id);
+        if ($user->can('edit book')) {
+            $authors = Author::all();
+            $categories = Category::all();
 
-        return view('books.edit', compact('book', 'authors', 'categories'));
+            return view('books.edit', compact('book', 'authors', 'categories'));
+        } else {
+            return back()->withErrors(['forbidden' => 'You are not authorized to do this', 'Contact the director']);
+        }
     }
 
     /**
@@ -166,8 +172,12 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        $book->delete();
-
-        return redirect()->route('books.index');
+        $user = User::find(auth()->user()->id);
+        if ($user->can('delete book')) {
+            $book->delete();
+            return redirect()->route('books.index');
+        } else {
+            return back()->withErrors(['forbidden' => 'You are not authorized to do this', 'Contact the director']);
+        }
     }
 }

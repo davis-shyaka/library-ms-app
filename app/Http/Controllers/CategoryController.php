@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -67,7 +68,13 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.edit', compact('category'));
+        $user = User::find(auth()->user()->id);
+
+        if ($user->can('edit category')) {
+            return view('categories.edit', compact('category'));
+        } else {
+            return back()->withErrors(['fobidden' => 'You are not authorized to do this', 'Contact the director']);
+        }
     }
 
     /**
@@ -97,8 +104,13 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        $user = User::find(auth()->user()->id);
 
-        return redirect()->route('categories.index');
+        if ($user->can('delete category')) {
+            $category->delete();
+            return redirect()->route('categories.index');
+        } else {
+            return back()->withErrors(['fobidden' => 'You are not authorized to do this', 'Contact the director']);
+        }
     }
 }

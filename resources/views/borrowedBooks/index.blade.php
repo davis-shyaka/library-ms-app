@@ -10,6 +10,7 @@
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg dark:bg-[#020917]">
                 {{-- Top Section of the Table --}}
                 <div class="w-full text-sm text-left p-4">
+                    <x-validation-errors />
                     <div class="flex items-center justify-between space-x-3 xl:flex-row sm:flex-col">
                         <label for="table-search" class="sr-only">Search</label>
                         <div class="relative mt-5">

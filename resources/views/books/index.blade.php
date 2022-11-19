@@ -10,6 +10,7 @@
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg dark:bg-[#020917]">
                 {{-- Top Section of the Table --}}
                 <div class="w-full text-sm text-left p-4">
+                    <x-validation-errors />
                     <div class="flex items-center justify-between space-x-3 xl:flex-row sm:flex-col">
                         <div class="relative mt-5">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">

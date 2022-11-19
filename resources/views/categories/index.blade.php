@@ -10,12 +10,12 @@
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg dark:bg-[#020917]">
                 {{-- Top Section of the Table --}}
                 <div class="w-full text-sm text-left p-4">
+                    <x-validation-errors />
                     <div class="flex items-center space-x-3 xl:flex-row sm:flex-col">
-                        <label for="table-search" class="sr-only">Search</label>
                         <div class="relative mt-5">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <svg class="w-5 h-5 text-black" aria-hidden="true" fill="currentColor"
-                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="w-5 h-5 text-black" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                         d="M3 3h14v14H3V3zm12 12V5H5v10h10zm-8 6v-2h12V7h2v14H7zm4-12h2v2h-2v2H9v-2H7V9h2V7h2v2z"
                                         fill="currentColor" />

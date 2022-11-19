@@ -30,10 +30,13 @@
     <div class="">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
+                <x-success-message />
                 <div class="flex flex-col">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 dark:bg-[#020917] p-4">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                             <div class="shadow overflow-hidden border-b border-cyan-400 sm:rounded-lg">
+                                <a class="block p-2 pl-10 w-40 text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-green-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    href="{{ route('users.create') }}">Add a new Librarian</a>
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-900 dark:dark:bg-[#020917]">
                                         <tr>
@@ -93,17 +96,18 @@
                                                     @endif
 
                                                 </td>
-                                                <td {{-- class="px-6 py-4 whitespace-nowrap text-sm font-medium flex items-center justify-center space-x-3">
+                                                <td
+                                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium flex items-center justify-center space-x-3">
                                                     <a href="{{ route('users.edit', $user) }}"><button
                                                             class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-white hover:text-blue-600 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
-                                                            type="submit">Edit</button></a> --}} <form method="POST"
-                                                    action="{{ route('users.destroy', $user) }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button
-                                                        class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-white hover:text-red-600 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
-                                                        type="submit"
-                                                        onclick="return confirm(`Are you sure you want to delete this user: '{{ $user->name }}'?`)">Delete</button>
+                                                            type="submit">Edit</button></a>
+                                                    <form method="POST" action="{{ route('users.destroy', $user) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button
+                                                            class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-white hover:text-red-600 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
+                                                            type="submit"
+                                                            onclick="return confirm(`Are you sure you want to delete this user: '{{ $user->name }}'?`)">Delete</button>
                                                     </form>
                                                 </td>
                                             </tr>
