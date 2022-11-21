@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'UR') }}</title>
 
     <!-- Fonts -->
     <link
@@ -19,13 +19,13 @@
             display: none;
         }
     </style>
-    
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>
-    <div class="font-sans antialiased" x-data="mainState" :class="{dark: isDarkMode}" x-cloak>
+    <div class="font-sans antialiased" x-data="mainState" :class="{ dark: isDarkMode }" x-cloak>
         <div class="flex flex-col min-h-screen text-gray-900 bg-gray-100 dark:bg-dark-bg dark:text-gray-200">
             {{ $slot }}
 
