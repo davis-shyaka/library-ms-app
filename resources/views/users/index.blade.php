@@ -35,8 +35,27 @@
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 dark:bg-[#020917] p-4">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                             <div class="shadow overflow-hidden border-b border-cyan-400 sm:rounded-lg">
-                                <a class="block p-2 pl-10 w-40 text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-green-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    href="{{ route('users.create') }}">Add a new Librarian</a>
+                                <div>
+                                    <a class="block p-2 mb-4 w-fit text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-green-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        href="{{ route('users.create') }}">Add new staff</a>
+                                    <div class="flex flex-row gap-4">
+                                        <a class="block p-2 mb-4 w-fit text-sm text-black rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            href="{{ route('users.index') }}">All</a>
+                                        <form action="{{ route('users.librarians') }}" method="post">
+                                            @csrf
+                                            <button type="submit"
+                                                class="block p-2 mb-4 w-fit text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                Librarians</button>
+                                        </form>
+                                        <form action="{{ route('users.directors') }}" method="post">
+                                            @csrf
+                                            <button type="submit"
+                                                class="block p-2 mb-4 w-fit text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-indigo-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                Directors</button>
+                                        </form>
+                                    </div>
+                                </div>
+
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-900 dark:dark:bg-[#020917]">
                                         <tr>
@@ -87,14 +106,21 @@
                                                         {{ $user->reg_number }}</div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                                    @if ($user->is_admin === 0)
+
+                                                    @if ($user->hasRole('librarian'))
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-200 text-green-800">Student</span>
-                                                    @else
-                                                        <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-800">Librarian</span>
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800">Librarian</span>
                                                     @endif
 
+                                                    @if ($user->hasRole('director'))
+                                                        <span
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-200 text-indigo-800">Director</span>
+                                                    @endif
+
+                                                    @if ($user->hasRole('super-admin'))
+                                                        <span
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-800">Super-Admin</span>
+                                                    @endif
                                                 </td>
                                                 <td
                                                     class="px-6 py-4 whitespace-nowrap text-sm font-medium flex items-center justify-center space-x-3">
@@ -117,7 +143,7 @@
 
                             </div>
                             <div class="mt-4">
-                                {{ $users->links() }}
+                                {{-- {{ $users->links() }} --}}
                             </div>
                         </div>
                     </div>

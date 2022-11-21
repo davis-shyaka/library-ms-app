@@ -52,6 +52,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::post('/search', [BookController::class, 'search'])->name('books.search');
     Route::post('/usersSearch', [UserController::class, 'search'])->name('users.search');
+    Route::post('/librarians', [UserController::class, 'librarians'])->name('users.librarians');
+    Route::post('/directors', [UserController::class, 'directors'])->name('users.directors');
     Route::post('/borrowedBookSearch', [BorrowedBookController::class, 'search'])->name('borrowedBooks.search');
     // });
 });

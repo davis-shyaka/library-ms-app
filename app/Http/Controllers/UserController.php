@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::paginate(3);
+        $users = User::paginate();
 
         return view('users.index', compact('users'));
     }
@@ -47,7 +47,8 @@ class UserController extends Controller
 
         $user->assignRole($request->role);
         // dd($user->roles);
-        return redirect()->route('users.index')->with('message', 'Created ' . $user->name . ' as a' . auth()->user()->roles->pluck('name')->first() . ' successfully');;
+        $role = $user->getRoleNames()[0];
+        return redirect()->route('users.index')->with('message', 'Created ' . $user->name . ' as a "' . $role . '" successfully');;
     }
 
 
@@ -78,5 +79,17 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('users.index');
+    }
+
+    public function librarians(Request $request)
+    {
+        $users = User::role('librarian')->get();
+        return view('users.index', compact('users'));
+    }
+
+    public function directors(Request $request)
+    {
+        $users = User::role('director')->get();
+        return view('users.index', compact('users'));
     }
 }
