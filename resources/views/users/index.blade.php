@@ -42,10 +42,16 @@
                                     <div class="flex flex-row gap-4">
                                         <a class="block p-2 mb-4 w-fit text-sm text-black rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             href="{{ route('users.index') }}">All</a>
+                                        <form action="{{ route('users.students') }}" method="post">
+                                            @csrf
+                                            <button type="submit"
+                                                class="block p-2 mb-4 w-fit text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-green-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                Students</button>
+                                        </form>
                                         <form action="{{ route('users.librarians') }}" method="post">
                                             @csrf
                                             <button type="submit"
-                                                class="block p-2 mb-4 w-fit text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                class="block p-2 mb-4 w-fit text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-yellow-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 Librarians</button>
                                         </form>
                                         <form action="{{ route('users.directors') }}" method="post">
@@ -53,6 +59,12 @@
                                             <button type="submit"
                                                 class="block p-2 mb-4 w-fit text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-indigo-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 Directors</button>
+                                        </form>
+                                        <form action="{{ route('users.superAdmins') }}" method="post">
+                                            @csrf
+                                            <button type="submit"
+                                                class="block p-2 mb-4 w-fit text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-red-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                Super Admins</button>
                                         </form>
                                     </div>
 
@@ -99,7 +111,8 @@
                                                             <div class="text-sm text-gray-500">
                                                                 {{ $user->email }}
                                                             </div>
-                                                            <div class="text-sm text-gray-500">{{ $user->phone_number }}
+                                                            <div class="text-sm text-gray-500">
+                                                                {{ $user->phone_number }}
                                                             </div>
 
                                                         </div>
@@ -110,10 +123,13 @@
                                                         {{ $user->reg_number }}</div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
-
+                                                    @if ($user->hasRole('student'))
+                                                        <span
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-200 text-green-800">Student</span>
+                                                    @endif
                                                     @if ($user->hasRole('librarian'))
                                                         <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-blue-800">Librarian</span>
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-200 text-yellow-800">Librarian</span>
                                                     @endif
 
                                                     @if ($user->hasRole('director'))

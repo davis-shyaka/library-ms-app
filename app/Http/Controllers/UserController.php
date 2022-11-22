@@ -16,6 +16,15 @@ class UserController extends Controller
         $users = User::paginate();
 
         return view('users.index', compact('users'));
+
+        // $user = User::find(auth()->user()->id);
+        // if ($user->can('view books')) {
+        //     $users = User::paginate();
+
+        //     return view('users.index', compact('users'));
+        // } else {
+        //     return back()->withErrors(['forbidden' => 'You are not authorized to do this', 'Contact the director']);
+        // }
     }
 
     public function create()
@@ -81,6 +90,13 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
+    // filtering based on roles
+
+    public function students(Request $request)
+    {
+        $users = User::role('student')->get();
+        return view('users.index', compact('users'));
+    }
     public function librarians(Request $request)
     {
         $users = User::role('librarian')->get();
@@ -90,6 +106,11 @@ class UserController extends Controller
     public function directors(Request $request)
     {
         $users = User::role('director')->get();
+        return view('users.index', compact('users'));
+    }
+    public function superAdmins(Request $request)
+    {
+        $users = User::role('super-admin')->get();
         return view('users.index', compact('users'));
     }
 }

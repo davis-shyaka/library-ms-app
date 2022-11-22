@@ -19,6 +19,12 @@ class RolesAndPermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
+        // create permissions - user
+        Permission::firstOrCreate(['name' => 'view books']);
+        Permission::firstOrCreate(['name' => 'view authors']);
+        Permission::firstOrCreate(['name' => 'view categories']);
+
+
         // create permissions - book
         Permission::firstOrCreate(['name' => 'add book']);
         Permission::firstOrCreate(['name' => 'update book']);
@@ -45,12 +51,30 @@ class RolesAndPermissionsSeeder extends Seeder
         // $role->givePermissionTo('edit articles');
 
         // or may be done by chaining
+        $role = Role::firstOrCreate(['name' => 'student'])
+            ->givePermissionTo([
+                'view books',
+                'view authors',
+                'view categories',
+            ]);
+
         $role = Role::firstOrCreate(['name' => 'librarian'])
-            ->givePermissionTo(['add book', 'add author', 'add category', 'lend book']);
+            ->givePermissionTo([
+                'view books',
+                'view authors',
+                'view categories',
+                'add book',
+                'add author',
+                'add category',
+                'lend book'
+            ]);
 
         $role = Role::firstOrCreate(['name' => 'director'])
             ->givePermissionTo(
                 [
+                    'view books',
+                    'view authors',
+                    'view categories',
                     'add book',
                     'update book',
                     'lend book',
