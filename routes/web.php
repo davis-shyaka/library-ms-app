@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,6 +53,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::post('/search', [BookController::class, 'search'])->name('books.search');
     Route::post('/usersSearch', [UserController::class, 'search'])->name('users.search');
+    Route::post('/usersSearch', [UserController::class, 'search'])->name('users.search');
+    Route::post('/editRole', [UserController::class, 'editRole'])->name('users.editRole');
     Route::post('/students', [UserController::class, 'students'])->name('users.students');
     Route::post('/librarians', [UserController::class, 'librarians'])->name('users.librarians');
     Route::post('/directors', [UserController::class, 'directors'])->name('users.directors');

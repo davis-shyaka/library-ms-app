@@ -19,11 +19,16 @@ class RolesAndPermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // create permissions - user
+        // create permissions - student
         Permission::firstOrCreate(['name' => 'view books']);
         Permission::firstOrCreate(['name' => 'view authors']);
         Permission::firstOrCreate(['name' => 'view categories']);
 
+        // create permissions - user
+        Permission::firstOrCreate(['name' => 'add user']);
+        Permission::firstOrCreate(['name' => 'update user']);
+        Permission::firstOrCreate(['name' => 'edit role']);
+        Permission::firstOrCreate(['name' => 'delete user']);
 
         // create permissions - book
         Permission::firstOrCreate(['name' => 'add book']);
@@ -72,6 +77,10 @@ class RolesAndPermissionsSeeder extends Seeder
         $role = Role::firstOrCreate(['name' => 'director'])
             ->givePermissionTo(
                 [
+                    'add user',
+                    'update user',
+                    'edit role',
+                    'delete user',
                     'view books',
                     'view authors',
                     'view categories',
