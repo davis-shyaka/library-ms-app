@@ -19,6 +19,17 @@ class RolesAndPermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
+        // create permissions - student
+        Permission::firstOrCreate(['name' => 'view books']);
+        Permission::firstOrCreate(['name' => 'view authors']);
+        Permission::firstOrCreate(['name' => 'view categories']);
+
+        // create permissions - user
+        Permission::firstOrCreate(['name' => 'add user']);
+        Permission::firstOrCreate(['name' => 'update user']);
+        Permission::firstOrCreate(['name' => 'edit role']);
+        Permission::firstOrCreate(['name' => 'delete user']);
+
         // create permissions - book
         Permission::firstOrCreate(['name' => 'add book']);
         Permission::firstOrCreate(['name' => 'update book']);
@@ -45,12 +56,34 @@ class RolesAndPermissionsSeeder extends Seeder
         // $role->givePermissionTo('edit articles');
 
         // or may be done by chaining
+        $role = Role::firstOrCreate(['name' => 'student'])
+            ->givePermissionTo([
+                'view books',
+                'view authors',
+                'view categories',
+            ]);
+
         $role = Role::firstOrCreate(['name' => 'librarian'])
-            ->givePermissionTo(['add book', 'add author', 'add category', 'lend book']);
+            ->givePermissionTo([
+                'view books',
+                'view authors',
+                'view categories',
+                'add book',
+                'add author',
+                'add category',
+                'lend book'
+            ]);
 
         $role = Role::firstOrCreate(['name' => 'director'])
             ->givePermissionTo(
                 [
+                    'add user',
+                    'update user',
+                    'edit role',
+                    'delete user',
+                    'view books',
+                    'view authors',
+                    'view categories',
                     'add book',
                     'update book',
                     'lend book',

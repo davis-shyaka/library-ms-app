@@ -13,16 +13,30 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::paginate(3);
+        $users = User::paginate();
 
         return view('users.index', compact('users'));
+
+        // $user = User::find(auth()->user()->id);
+        // if ($user->can('view books')) {
+        //     $users = User::paginate();
+
+        //     return view('users.index', compact('users'));
+        // } else {
+        //     return back()->withErrors(['forbidden' => 'You are not authorized to do this', 'Contact the director']);
+        // }
     }
 
     public function create()
     {
-        $roles = Role::all();
-        // dd($roles);
-        return view('users.create', compact('roles'));
+        $user = User::find(auth()->user()->id);
+        if ($user->can('create user')) {
+            $roles = Role::all();
+            // dd($roles);
+            return view('users.create', compact('roles'));
+        } else {
+            return back()->withErrors(['forbidden' => 'You are not authorized to do this', 'Contact the director']);
+        }
     }
 
 
@@ -47,7 +61,8 @@ class UserController extends Controller
 
         $user->assignRole($request->role);
         // dd($user->roles);
-        return redirect()->route('users.index')->with('message', 'Created ' . $user->name . ' as a' . auth()->user()->roles->pluck('name')->first() . ' successfully');;
+        $role = $user->getRoleNames()[0];
+        return redirect()->route('users.index')->with('message', 'Created ' . $user->name . ' as a "' . $role . '" successfully');;
     }
 
 
@@ -63,20 +78,84 @@ class UserController extends Controller
     }
 
 
-    public function edit(User $request)
+    public function edit(User $user)
     {
-        //
+        $thisUser = User::find(auth()->user()->id);
+        if ($thisUser->can('edit user')) {
+
+            $roles = Role::all();
+
+            return view('users.edit', compact('user', 'roles'));
+        } else {
+            return back()->withErrors(['forbidden' => 'You are not authorized to do this', 'Contact the director']);
+        }
     }
 
+    public function editRole(User $user)
+    {
+        $thisUser = User::find(auth()->user()->id);
+        if ($thisUser->can('edit role')) {
+
+            $roles = Role::all();
+
+            return view('users.edit.role', compact('user', 'roles'));
+        } else {
+            return back()->withErrors(['forbidden' => 'You are not authorized to do this', 'Contact the director']);
+        }
+    }
 
     public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'reg_number' => ['required', 'integer', 'unique:users'],
+            'phone_number' => ['required', 'unique:users'],
+            'password' => ['required', 'confirmed', 'min:6'],
+            'role' => ['required']
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'reg_number' => $request->reg_number,
+            'phone_number' => $request->phone_number,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $user->syncRoles($request->role);
+        $role = $user->getRoleNames()[0];
+
+        return redirect()->route('users.index')->with('message', 'Update ' . $user->name . ' to a "' . $role . '" successfully');;
     }
 
     public function destroy(User $user)
     {
         $user->delete();
         return redirect()->route('users.index');
+    }
+
+    // filtering based on roles
+
+    public function students(Request $request)
+    {
+        $users = User::role('student')->get();
+        return view('users.index', compact('users'));
+    }
+    public function librarians(Request $request)
+    {
+        $users = User::role('librarian')->get();
+        return view('users.index', compact('users'));
+    }
+
+    public function directors(Request $request)
+    {
+        $users = User::role('director')->get();
+        return view('users.index', compact('users'));
+    }
+    public function superAdmins(Request $request)
+    {
+        $users = User::role('super-admin')->get();
+        return view('users.index', compact('users'));
     }
 }
